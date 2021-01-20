@@ -1,0 +1,14 @@
+{
+  "i18n": {
+    "NoPoLineTip": "请导航到订单行",
+    "Update": "修改",
+    "UpdatePoLine": "修改订单行",
+    "UpdateUnitPrice": "修改单价",
+    "Currency": "币种",
+    "Vendor": "书商",
+    "Fund": "经费",
+    "UnitPrice":"单价",
+    "UpdateSuccess": "请检索订单行 [{{number}}]!",
+    "UpdateConfirm": "是否要关闭当前订单行,并创建新的订单行?"
+  }
+}

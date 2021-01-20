@@ -1,0 +1,52 @@
+{
+   "id": "pol-post-correction",
+   "title": [
+      {
+         "lang": "en",
+         "text": "POL Post Correction"
+      },
+      {
+         "lang": "zh",
+         "text": "订单行修正"
+      }
+   ],
+   "description": [
+      {
+         "lang": "en",
+         "text": "POL Post Correction,providing fields for each position and drop down menus for controlled values for creating new POL base on current POL,and then cancel the current POL."
+      },
+      {
+         "lang": "zh",
+         "text": "订单行修正，用户在当前订单行的基础上,通过更改下拉列表选项创建新的订单行,并关闭原有订单行"
+      }
+   ],
+   "subtitle": [
+      {
+         "lang": "en",
+         "text": "POL Post Correction"
+      },
+      {
+         "lang": "zh",
+         "text": "订单行修正"
+      }
+   ],
+   "author": "metadata group",
+   "entities": [
+      "PO_LINE"
+   ],
+   "icon": {
+      "type": "font",
+      "value": "fa fa-pencil-square-o"
+   },
+   "fullscreen": {
+      "allow": true,
+      "open": false
+   },
+   "contentSecurity": {
+      "connectSrc": [],
+      "sandbox": {
+         "popups": true,
+         "modals": true
+      }
+   }
+}

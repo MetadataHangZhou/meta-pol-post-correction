@@ -1,0 +1,14 @@
+{
+  "i18n": {
+    "NoPoLineTip": "Please navigate to a POLINE record.",
+    "Update": "Update",
+    "UpdatePoLine": "Update POLINE",
+    "UpdateUnitPrice": "Update Unit Price",
+    "Currency": "Currency",
+    "Vendor": "Vendor",
+    "Fund": "Fund",
+    "UnitPrice":"Unit Price",
+    "UpdateSuccess": "Please navigate to POLINE [{{number}}]!",
+    "UpdateConfirm": "Do you want to cancel Current POLINE,and create a new POLine?"
+  }
+}
