@@ -35,8 +35,8 @@
       "PO_LINE"
    ],
    "icon": {
-      "type": "font",
-      "value": "fa fa-pencil-square-o"
+      "type": "url",
+      "value": "/assets/ppc_logo.png"
    },
    "fullscreen": {
       "allow": true,
