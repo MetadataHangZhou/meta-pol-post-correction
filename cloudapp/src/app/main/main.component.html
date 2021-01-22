@@ -41,7 +41,7 @@
     <mat-label>{{'i18n.UnitPrice'|translate}}</mat-label>
     <input matInput [(ngModel)]="price"/>
   </mat-form-field>
-  <button mat-flat-button type="button" color="primary" (click)="updatePrice(apiResult)" [disabled]="!hasApiResult || loading">{{'i18n.UpdateUnitPrice'|translate}}</button>
+  <button mat-flat-button type="button" color="primary" (click)="updatePrice(apiResult)" [disabled]="!hasApiResult || loading">{{'i18n.Update'|translate}}</button>
     <div class="desc">{{'i18n.UpdateUnitPriceDesc'|translate}}</div>
   </mat-card>
   </section>

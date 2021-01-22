@@ -151,7 +151,11 @@ export class MainComponent implements OnInit, OnDestroy {
     requestBody.location.forEach((item)=>{
       quantity+=item.quantity
     })
-    requestBody.fund_distribution.amount = Number(this.price)*quantity;
+    if(requestBody.fund_distribution) {
+      requestBody.fund_distribution.forEach(item=>{
+        item.amount.sum = (Number(this.price)*quantity).toFixed(1)+"";
+      })
+    }
     this.loading = true;
     this.sendUpdateRequest(requestBody);
   }
@@ -278,6 +282,7 @@ export class MainComponent implements OnInit, OnDestroy {
     };
     this.restService.call(request).subscribe({
       next: result => {
+        this.loading = false;
         this.apiResult = result;
         this.alert.success(this.translate.instant('i18n.UpdateSuccess',{number:result.number}), { autoClose: false });
         let ALMA_MENU_TOP_NAV_Search_Text:HTMLInputElement = (window.parent.document.getElementById('ALMA_MENU_TOP_NAV_Search_Text') as HTMLInputElement);
