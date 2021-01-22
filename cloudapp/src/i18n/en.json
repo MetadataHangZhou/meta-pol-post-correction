@@ -1,14 +1,18 @@
 {
   "i18n": {
+    "IllegalParameter": "illegal parameter",
+    "NotAllowUpdate": "not allow update poline",
     "NoPoLineTip": "Please navigate to a POLINE record.",
     "Update": "Update",
+    "UpdateDesc": "POL Post Correction will create new POL base on current POL,and then cancel the current POL.",
     "UpdatePoLine": "Update POLINE",
     "UpdateUnitPrice": "Update Unit Price",
+    "UpdateUnitPriceDesc": "before poline complete,allow update unit price",
     "Currency": "Currency",
     "Vendor": "Vendor",
     "Fund": "Fund",
     "UnitPrice":"Unit Price",
-    "UpdateSuccess": "Please navigate to POLINE [{{number}}]!",
+    "UpdateSuccess": "Please navigate to POLINE [ {{number}} ]!",
     "UpdateConfirm": "Do you want to cancel Current POLINE,and create a new POLine?"
   }
 }

@@ -1,7 +1,6 @@
 
 <div *ngIf="apiResult; else nopoline">
 <h1 class="bold" *ngIf="resourceMetadata.title">{{ resourceMetadata.title }} [{{ resourceMetadata.mms_id.value }}]</h1>
-<!--<form [formGroup]="form" (ngSubmit)="onSubmit()">-->
   <section>
   <mat-card class="example-card">
     <mat-card-header>
@@ -29,7 +28,8 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-flat-button type="button" color="primary" (click)="update(apiResultArea.value)" [disabled]="!hasApiResult || loading">{{'i18n.Update'|translate}}</button>
+  <button mat-flat-button type="button" color="primary" (click)="update(apiResult)" [disabled]="!hasApiResult || loading">{{'i18n.Update'|translate}}</button>
+    <div class="desc">{{'i18n.UpdateDesc'|translate}}</div>
   </mat-card>
   </section>
   <section>
@@ -41,54 +41,16 @@
     <mat-label>{{'i18n.UnitPrice'|translate}}</mat-label>
     <input matInput [(ngModel)]="price"/>
   </mat-form-field>
-  <button mat-flat-button type="button" color="primary" (click)="updatePrice(apiResultArea.value)" [disabled]="!hasApiResult || loading">{{'i18n.UpdateUnitPrice'|translate}}</button>
+  <button mat-flat-button type="button" color="primary" (click)="updatePrice(apiResult)" [disabled]="!hasApiResult || loading">{{'i18n.UpdateUnitPrice'|translate}}</button>
+    <div class="desc">{{'i18n.UpdateUnitPriceDesc'|translate}}</div>
   </mat-card>
   </section>
-    <!--  <button mat-flat-button type="button" color="primary" type="submit" [disabled]="!hasApiResult || loading">修改</button>-->
-<!--</form>-->
 </div>
 <ng-template #nopoline>
   <section>
-    <!--  <h1>-->
-    <!--    Welcome!-->
-    <!--  </h1>-->
-    <!--  <p>Use this sample app to get you started. The app includes the following:</p>-->
-    <!--  <ul>-->
-    <!--    <li>Listener for the <code>onPageLoad</code> event</li>-->
-    <!--    <li>Performs an API call using the <code>restService</code> service</li>-->
-    <!--    <li>Updates the object using the <code>restService</code> service</li>-->
-    <!--    <li>Refreshes the page in Alma</li>-->
-    <!--  </ul>-->
-    <!--  <p>Use these building blocks to be on your way to developing your own Cloud App.</p>-->
     <h1 class="tip">{{'i18n.NoPoLineTip'|translate}}</h1>
   </section>
 </ng-template>
-<!--<button mat-flat-button type="button" color="primary" (click)="update(apiResultArea.value)" [disabled]="!hasApiResult || loading">修改</button>-->
-<section style="display:none;">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title>Page Entity</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <pre>{{ pageEntities | json }}</pre>
-    </mat-card-content>
-  </mat-card>
-</section>
-
-<section style="display:none;">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title>API Result</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <textarea #apiResultArea [value]="apiResult | json"></textarea>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="update(apiResultArea.value)"
-        [disabled]="!hasApiResult || loading">Update</button>
-    </mat-card-actions>
-  </mat-card>
-</section>
 <div class="loading-shade" *ngIf="loading">
   <mat-spinner diameter="50"></mat-spinner>
 </div>

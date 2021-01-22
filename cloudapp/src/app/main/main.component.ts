@@ -1,11 +1,10 @@
 import { Subscription } from 'rxjs';
-import { FormGroup,FormControl,FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {Component, OnInit, OnDestroy, NgModule} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
   CloudAppRestService, CloudAppEventsService, Request, HttpMethod,
-  Entity, PageInfo, RestErrorResponse, AlertService,EntityType,
-  CloudAppSettingsService,CloudAppConfigService
+  Entity, PageInfo, RestErrorResponse, AlertService,EntityType
 } from '@exlibris/exl-cloudapp-angular-lib';
 
 interface Mmsid {
@@ -56,7 +55,6 @@ export class MainComponent implements OnInit, OnDestroy {
     vendor:''
   };
   price='';
-  currency: FormControl = new FormControl('');
   resourceMetadata: ResourceMetadata = {};
   hasApiResult: boolean = false;
   loading = false;
@@ -112,6 +110,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.pageEntities = pageInfo.entities;
     if ((pageInfo.entities || []).length == 1) {
       const entity = pageInfo.entities[0];
+      //if entity type is PO_LINE,display form
       if(entity.type === EntityType.PO_LINE) {
         this.restService.call(entity.link).subscribe(result => {
 
@@ -137,9 +136,23 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
   updatePrice(value:any) {
-    let requestBody = this.tryParseJson(value);
+    let reg = /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/;
+    if(!reg.test(this.price)){
+      this.alert.error(this.translate.instant('i18n.IllegalParameter'));
+      return
+    }
+    let requestBody = value;
+    if(requestBody.status.value === 'COMPLETED') {
+      this.alert.error(this.translate.instant('i18n.NotAllowUpdate'));
+      return
+    }
     requestBody.price.sum = this.price;
-    requestBody.fund_distribution.amount = this.price;
+    let quantity = 0;
+    requestBody.location.forEach((item)=>{
+      quantity+=item.quantity
+    })
+    requestBody.fund_distribution.amount = Number(this.price)*quantity;
+    this.loading = true;
     this.sendUpdateRequest(requestBody);
   }
   update(value: any) {
@@ -152,16 +165,11 @@ export class MainComponent implements OnInit, OnDestroy {
     let vendorsIndex = this.vendors.findIndex((item)=>{
       return this.poLineInfo.vendor===item.code
     })
-    let requestBody = this.tryParseJson(value);
-    console.log(requestBody)
+    let requestBody = value;
     let status = requestBody.status.value
-    requestBody.status = {
-      "value": "AUTO_PACKAGING",
-      "desc": "Auto Packaging"
-    }
-    requestBody.status = {
-      "value": "SENT",
-        "desc": "Sent"
+    if(status === 'COMPLETED') {
+      this.alert.error(this.translate.instant('i18n.NotAllowUpdate'));
+      return
     }
     if(currencyIndex>-1) {
       requestBody.price.currency = this.currencyCode[currencyIndex]
@@ -183,18 +191,9 @@ export class MainComponent implements OnInit, OnDestroy {
         item.fund_code.desc = this.funds[fundsIndex].name
       })
     }
-
-    console.log(requestBody)
-
-    // this.loading = true;
-    // let requestBody = this.tryParseJson(value);
-    // if (!requestBody) {
-    //   this.loading = false;
-    //   return this.alert.error('Failed to parse json');
-    // }
-    // this.alert.success(this.translate.instant('i18n.UpdateSuccess',{number:"111"}));
     if(window.confirm(this.translate.instant('i18n.UpdateConfirm'))) {
-      this.sendDeleteRequest(requestBody,status);
+      this.loading = true;
+      this.cancelPolineRequest(requestBody,status);
     }
 
   }
@@ -210,19 +209,19 @@ export class MainComponent implements OnInit, OnDestroy {
       complete: () => this.loading = false
     });
   }
-  private sendDeleteRequest(requestBody: any,status:any) {
+  // cancel current poline and create a new poline.if poline status was cancelled,create new poline
+  private cancelPolineRequest(requestBody: any,status:any) {
     let request: Request = {
       url: this.pageEntities[0].link+"?reason=LIBRARY_CANCELLED",
       method: HttpMethod.DELETE
     };
+
     if(status==="CANCELLED") {
-      this.sendCreateRequest(requestBody);
+      this.createPolineRequest(requestBody);
     }else{
       this.restService.call(request).subscribe({
         next: result => {
-          this.sendCreateRequest(requestBody);
-          // this.apiResult = result;
-          // this.refreshPage();
+          this.createPolineRequest(requestBody);
         },
         error: (e: RestErrorResponse) => {
           this.alert.error('Failed to update data');
@@ -233,6 +232,7 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
   }
+  // get vendor list
   private getVendors(library:any) {
     let request: Request = {
       url: '/almaws/v1/acq/vendors?limit=100&status=active',
@@ -249,7 +249,7 @@ export class MainComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  // get fund list
   private getFunds(library:any) {
     let request: Request = {
       url: '/almaws/v1/acq/funds?limit=100&library='+library,
@@ -266,10 +266,9 @@ export class MainComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     });
-
-
   }
-  private sendCreateRequest(requestBody:any) {
+  // create new poline and search poline-number
+  private createPolineRequest(requestBody:any) {
     delete requestBody.number
     delete requestBody.po_number
     let request: Request = {
@@ -283,12 +282,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.alert.success(this.translate.instant('i18n.UpdateSuccess',{number:result.number}), { autoClose: false });
         let ALMA_MENU_TOP_NAV_Search_Text:HTMLInputElement = (window.parent.document.getElementById('ALMA_MENU_TOP_NAV_Search_Text') as HTMLInputElement);
         let simpleSearchBtn = window.parent.document.getElementById('simpleSearchBtn');
-        let simpleSearchIndexes:HTMLInputElement= (window.parent.document.getElementById('simpleSearchIndexes') as HTMLInputElement);
-        let simpleSearchKeyButton:HTMLInputElement= (window.parent.document.getElementById('simpleSearchKeyButton') as HTMLInputElement);
-        let ADD_HIDERADIO_TOP_NAV_Search_input_ORDERLINE:HTMLInputElement= (window.parent.document.getElementById('ADD_HIDERADIO_TOP_NAV_Search_input_ORDERLINE') as HTMLInputElement);
         ALMA_MENU_TOP_NAV_Search_Text.value = result.number
-        console.log(simpleSearchBtn);
-        console.log(simpleSearchKeyButton.value);
         simpleSearchBtn.click()
         // this.refreshPage();
       },
@@ -318,7 +312,6 @@ export class MainComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   private tryParseJson(value: any) {
     try {
       return JSON.parse(value);

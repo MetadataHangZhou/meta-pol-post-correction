@@ -1,6 +1,6 @@
 {
-  "name": "pol-post-correction",
-  "version": "0.0.1",
+  "name": "my-exl-cloudapp",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "eca start --no-install --no-open-browser"

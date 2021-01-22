@@ -1,9 +1,13 @@
 {
   "i18n": {
+    "IllegalParameter": "非法参数",
+    "NotAllowUpdate": "订单行不允许修改",
     "NoPoLineTip": "请导航到订单行",
     "Update": "修改",
+    "UpdateDesc": "订单行修正将创建新的订单行,并关闭原有订单行",
     "UpdatePoLine": "修改订单行",
     "UpdateUnitPrice": "修改单价",
+    "UpdateUnitPriceDesc": "修改单价只能在订单完成前修改",
     "Currency": "币种",
     "Vendor": "书商",
     "Fund": "经费",
