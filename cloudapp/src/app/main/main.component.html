@@ -32,20 +32,8 @@
     <div class="desc">{{'i18n.UpdateDesc'|translate}}</div>
   </mat-card>
   </section>
-  <section>
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title>{{'i18n.UpdateUnitPrice'|translate}}</mat-card-title>
-    </mat-card-header>
-    <mat-form-field>
-    <mat-label>{{'i18n.UnitPrice'|translate}}</mat-label>
-    <input matInput [(ngModel)]="price"/>
-  </mat-form-field>
-  <button mat-flat-button type="button" color="primary" (click)="updatePrice(apiResult)" [disabled]="!hasApiResult || loading">{{'i18n.Update'|translate}}</button>
-    <div class="desc">{{'i18n.UpdateUnitPriceDesc'|translate}}</div>
-  </mat-card>
-  </section>
 </div>
+
 <ng-template #nopoline>
   <section>
     <h1 class="tip">{{'i18n.NoPoLineTip'|translate}}</h1>

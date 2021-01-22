@@ -6,12 +6,9 @@
     "Update": "Update",
     "UpdateDesc": "POL Post Correction will create new POL,and then cancel the current POL.",
     "UpdatePoLine": "Update POLINE",
-    "UpdateUnitPrice": "Update List Price",
-    "UpdateUnitPriceDesc": "before poline complete,allow update list price",
     "Currency": "Currency",
     "Vendor": "Vendor",
     "Fund": "Fund",
-    "UnitPrice":"List Price",
     "UpdateSuccess": "Please navigate to POLINE [ {{number}} ]!",
     "UpdateConfirm": "Do you want to cancel Current POLINE,and create a new POLine?"
   }

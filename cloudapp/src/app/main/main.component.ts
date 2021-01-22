@@ -135,30 +135,6 @@ export class MainComponent implements OnInit, OnDestroy {
       this.resourceMetadata = {}
     }
   }
-  updatePrice(value:any) {
-    let reg = /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/;
-    if(!reg.test(this.price)){
-      this.alert.error(this.translate.instant('i18n.IllegalParameter'));
-      return
-    }
-    let requestBody = value;
-    if(requestBody.status.value === 'COMPLETED') {
-      this.alert.error(this.translate.instant('i18n.NotAllowUpdate'));
-      return
-    }
-    requestBody.price.sum = this.price;
-    let quantity = 0;
-    requestBody.location.forEach((item)=>{
-      quantity+=item.quantity
-    })
-    if(requestBody.fund_distribution) {
-      requestBody.fund_distribution.forEach(item=>{
-        item.amount.sum = (Number(this.price)*quantity).toFixed(1)+"";
-      })
-    }
-    this.loading = true;
-    this.sendUpdateRequest(requestBody);
-  }
   update(value: any) {
     let currencyIndex = this.currencyCode.findIndex((item)=>{
       return this.poLineInfo.currency===item.value
