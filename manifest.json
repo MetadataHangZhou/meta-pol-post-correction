@@ -13,11 +13,11 @@
    "description": [
       {
          "lang": "en",
-         "text": "POL Post Correction,providing fields for each position and drop down menus for controlled values, creating new POL base on current POL,and then cancel the current POL."
+         "text": "POL Post Correction,when the POL status is SENT, modify the Currency,Vendor and Fund. providing fields for each position and drop down menus for controlled values, creating new POL base on current POL,and then cancel the current POL."
       },
       {
          "lang": "zh",
-         "text": "订单行修正，用户在当前订单行的基础上,通过更改下拉列表选项创建新的订单行,并关闭原有订单行"
+         "text": "本APP可以在订单行状态为SENT的情况下修改订单行中的币种、供应商、经费字段，如果更改了币种、供应商、经费任意一个字段，将创建新的订单行，并关闭原来的订单行"
       }
    ],
    "subtitle": [
@@ -30,7 +30,7 @@
          "text": "订单行修正"
       }
    ],
-   "author": "metadata group",
+   "author": "Metadata HangZhou Co.Ltd.",
    "entities": [
       "PO_LINE"
    ],
