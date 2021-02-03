@@ -9,7 +9,7 @@
     "Currency": "Currency",
     "Vendor": "Vendor",
     "Fund": "Fund",
-    "UpdateSuccess": "Please navigate to POLINE [ {{number}} ]!",
+    "UpdateSuccess": "update seccessful，have create new POL [ {{number}} ]!",
     "UpdateConfirm": "Do you want to cancel Current POLINE,and create a new POLine?"
   }
 }

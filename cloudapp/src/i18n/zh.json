@@ -9,7 +9,7 @@
     "Currency": "币种",
     "Vendor": "书商",
     "Fund": "经费",
-    "UpdateSuccess": "请检索订单行 [{{number}}]!",
+    "UpdateSuccess": "更新成功，已生成新的订单行POL [{{number}}]!",
     "UpdateConfirm": "是否要关闭当前订单行,并创建新的订单行?"
   }
 }
