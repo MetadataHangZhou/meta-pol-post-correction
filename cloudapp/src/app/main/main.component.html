@@ -28,7 +28,7 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-flat-button type="button" color="primary" (click)="update(apiResult)" [disabled]="!hasApiResult || loading">{{'i18n.Update'|translate}}</button>
+  <button mat-flat-button type="button" color="primary" (click)="update(apiResult)" [disabled]="(!hasApiResult || loading) && funds.length>0 && vendors.length>0">{{'i18n.Update'|translate}}</button>
     <div class="desc">{{'i18n.UpdateDesc'|translate}}</div>
   </mat-card>
   </section>

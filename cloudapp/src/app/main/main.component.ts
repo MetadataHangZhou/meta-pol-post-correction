@@ -58,8 +58,8 @@ export class MainComponent implements OnInit, OnDestroy {
   resourceMetadata: ResourceMetadata = {};
   hasApiResult: boolean = false;
   loading = false;
-  funds:Fund[];
-  vendors:Vendor[];
+  funds:Fund[] = [];
+  vendors:Vendor[]= [];
   currencyCode = [{
     value:'CAD',
     desc:'Canadian Dollar'
@@ -136,6 +136,15 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
   update(value: any) {
+    if(!this.funds || !this.vendors) {
+      this.alert.error('Failed to get funds or vendors,can not update data,check funds or vendors');
+      return
+    }
+
+    if(!this.funds.length || !this.vendors.length) {
+      this.alert.error('Failed to get funds or vendors,can not update data,check funds or vendors');
+      return
+    }
     let currencyIndex = this.currencyCode.findIndex((item)=>{
       return this.poLineInfo.currency===item.value
     })
@@ -191,6 +200,8 @@ export class MainComponent implements OnInit, OnDestroy {
   }
   // cancel current poline and create a new poline.if poline status was cancelled,create new poline
   private cancelPolineRequest(requestBody: any,status:any) {
+    let po_number = requestBody.po_number
+    let number = requestBody.number
     let request: Request = {
       url: this.pageEntities[0].link+"?reason=LIBRARY_CANCELLED",
       method: HttpMethod.DELETE
@@ -204,7 +215,8 @@ export class MainComponent implements OnInit, OnDestroy {
           this.createPolineRequest(requestBody);
         },
         error: (e: RestErrorResponse) => {
-          this.alert.error('Failed to update data');
+          this.alert.error('Failed to cancel POL,po_number:'+po_number+",number:"+number);
+          this.alert.error('error:'+e.message);
           console.error(e);
           this.loading = false;
         }
@@ -220,10 +232,27 @@ export class MainComponent implements OnInit, OnDestroy {
     };
     this.restService.call(request).subscribe({
       next: result => {
+        let index = result.vendor.findIndex((item)=>{
+          return this.poLineInfo.fund===item.code
+        })
+        if(index == -1) {
+          result.vendor.push({
+            code:this._apiResult.vendor.value,
+            name:this._apiResult.vendor.desc
+          })
+        }
         this.vendors = result.vendor;
       },
       error: (e: RestErrorResponse) => {
-        this.alert.error('Failed to update data');
+        let vendors = []
+
+        vendors.push({
+          code:this._apiResult.vendor.value,
+          name:this._apiResult.vendor.desc
+        })
+        this.vendors = vendors
+        this.alert.error('get vendor list fail,library:'+library);
+        this.alert.error('error:'+e.message);
         console.error(e);
         this.loading = false;
       }
@@ -241,7 +270,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
       },
       error: (e: RestErrorResponse) => {
-        this.alert.error('Failed to update data');
+        this.alert.error('get fund list fail,library:'+library);
+        this.alert.error('error:'+e.message);
         console.error(e);
         this.loading = false;
       }
@@ -249,6 +279,8 @@ export class MainComponent implements OnInit, OnDestroy {
   }
   // create new poline and search poline-number
   private createPolineRequest(requestBody:any) {
+    let po_number = requestBody.po_number
+    let number = requestBody.number
     delete requestBody.number
     delete requestBody.po_number
     let request: Request = {
@@ -268,7 +300,8 @@ export class MainComponent implements OnInit, OnDestroy {
         // this.refreshPage();
       },
       error: (e: RestErrorResponse) => {
-        this.alert.error('Failed to update data');
+        this.alert.error('Failed to create new POL,po_number:'+po_number+",number:"+number);
+        this.alert.error('error:'+e.message);
         console.error(e);
         this.loading = false;
       }
