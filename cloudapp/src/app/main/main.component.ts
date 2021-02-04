@@ -123,11 +123,12 @@ export class MainComponent implements OnInit, OnDestroy {
               fund:result.fund_distribution[0].fund_code.value,
               vendor:result.vendor.value
             }
+            this.getFunds(this.settings.instCode)
+            this.getVendors(this.settings.instCode)
           }
 
         });
-        this.getFunds(this.settings.instCode)
-        this.getVendors(this.settings.instCode)
+
       }
 
     } else {
