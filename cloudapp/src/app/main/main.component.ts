@@ -157,8 +157,16 @@ export class MainComponent implements OnInit, OnDestroy {
     })
     let requestBody = value;
     let status = requestBody.status.value
-    if(status === 'COMPLETED') {
-      this.alert.error(this.translate.instant('i18n.NotAllowUpdate'));
+    let index = requestBody.location.findIndex((item)=>{
+      let copyindex =  item.copy.findIndex(copyItem=>{
+        return copyItem.receive_date
+      })
+      if(copyindex>-1) {
+        return true
+      }
+    })
+    if(index>-1) {
+      this.alert.error(this.translate.instant('i18n.NotAllowUpdate'),{autoClose:true});
       return
     }
     if(currencyIndex>-1) {
@@ -194,7 +202,7 @@ export class MainComponent implements OnInit, OnDestroy {
       next: () => this.alert.success('Success!'),
       error: e => {
         console.error(e);
-        this.alert.error('Failed to refresh page');
+        this.alert.error('Failed to refresh page',{autoClose:true});
       },
       complete: () => this.loading = false
     });
@@ -216,8 +224,8 @@ export class MainComponent implements OnInit, OnDestroy {
           this.createPolineRequest(requestBody);
         },
         error: (e: RestErrorResponse) => {
-          this.alert.error('Failed to cancel POL,po_number:'+po_number+",number:"+number);
-          this.alert.error('error:'+e.message);
+          this.alert.error('Failed to cancel POL,po_number:'+po_number+",number:"+number,{autoClose:true});
+          this.alert.error('error:'+e.message,{autoClose:true});
           console.error(e);
           this.loading = false;
         }
@@ -252,8 +260,8 @@ export class MainComponent implements OnInit, OnDestroy {
           name:this._apiResult.vendor.desc
         })
         this.vendors = vendors
-        this.alert.error('get vendor list fail,library:'+library);
-        this.alert.error('error:'+e.message);
+        this.alert.error('get vendor list fail,library:'+library,{autoClose:true});
+        this.alert.error('error:'+e.message,{autoClose:true});
         console.error(e);
         this.loading = false;
       }
@@ -271,8 +279,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
       },
       error: (e: RestErrorResponse) => {
-        this.alert.error('get fund list fail,library:'+library);
-        this.alert.error('error:'+e.message);
+        this.alert.error('get fund list fail,library:'+library,{autoClose:true});
+        this.alert.error('error:'+e.message,{autoClose:true});
         console.error(e);
         this.loading = false;
       }
@@ -293,7 +301,7 @@ export class MainComponent implements OnInit, OnDestroy {
       next: result => {
         this.loading = false;
         this.apiResult = result;
-        this.alert.success(this.translate.instant('i18n.UpdateSuccess',{number:result.number}), { autoClose: false });
+        this.alert.success(this.translate.instant('i18n.UpdateSuccess',{number:result.number}),{autoClose:true});
         let ALMA_MENU_TOP_NAV_Search_Text:HTMLInputElement = (window.parent.document.getElementById('ALMA_MENU_TOP_NAV_Search_Text') as HTMLInputElement);
         let simpleSearchBtn = window.parent.document.getElementById('simpleSearchBtn');
         ALMA_MENU_TOP_NAV_Search_Text.value = result.number
@@ -301,8 +309,8 @@ export class MainComponent implements OnInit, OnDestroy {
         // this.refreshPage();
       },
       error: (e: RestErrorResponse) => {
-        this.alert.error('Failed to create new POL,po_number:'+po_number+",number:"+number);
-        this.alert.error('error:'+e.message);
+        this.alert.error('Failed to create new POL,po_number:'+po_number+",number:"+number,{autoClose:true});
+        this.alert.error('error:'+e.message,{autoClose:true});
         console.error(e);
         this.loading = false;
       }

@@ -1,7 +1,7 @@
 {
   "i18n": {
     "IllegalParameter": "非法参数",
-    "NotAllowUpdate": "订单行不允许修改",
+    "NotAllowUpdate": "已接收的订单行不允许修改",
     "NoPoLineTip": "请导航到订单行",
     "Update": "修改",
     "UpdateDesc": "订单行修正将创建新的订单行,并关闭原有订单行",
