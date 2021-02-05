@@ -304,6 +304,8 @@ export class MainComponent implements OnInit, OnDestroy {
         this.alert.success(this.translate.instant('i18n.UpdateSuccess',{number:result.number}),{autoClose:true});
         let ALMA_MENU_TOP_NAV_Search_Text:HTMLInputElement = (window.parent.document.getElementById('ALMA_MENU_TOP_NAV_Search_Text') as HTMLInputElement);
         let simpleSearchBtn = window.parent.document.getElementById('simpleSearchBtn');
+        let simpleSearchKey = window.parent.document.getElementById('simpleSearchKey') as HTMLInputElement;
+        simpleSearchKey.value = 'ORDERLINE'
         ALMA_MENU_TOP_NAV_Search_Text.value = result.number
         simpleSearchBtn.click()
         // this.refreshPage();
